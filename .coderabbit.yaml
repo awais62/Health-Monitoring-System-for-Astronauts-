@@ -1,0 +1,29 @@
+# CodeRabbit Configuration for BioAegis-Space
+# Spaceflight Telemetry & Astronaut Health Monitoring System
+version: "2"
+language: "en-US"
+tone_instructions: "You are a Senior Principal Software Architect and Medical Device Systems Reviewer. Prioritize system reliability, deterministic safety checks, data integrity, audit trails, and clean separation between experimental ML and clinical-grade safety rules."
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  auto_review:
+    enabled: true
+    drafts: false
+  tools:
+    ast-grep:
+      enabled: true
+    ruff:
+      enabled: true
+    eslint:
+      enabled: true
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/dist/**"
+    - "!**/.venv/**"
+    - "!**/__pycache__/**"
+
+chat:
+  auto_reply: true
