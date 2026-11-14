@@ -22,7 +22,9 @@ import {
   AlertOctagon,
   Sparkles,
   Layers,
-  Database
+  Database,
+  Play,
+  Pause
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -45,6 +47,7 @@ export default function App() {
   const [telemetryHistory, setTelemetryHistory] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [syncStatus, setSyncStatus] = useState({ is_connected_to_earth: true, pending_count: 0 });
+  const [isAutoGenerating, setIsAutoGenerating] = useState(true);
   const [scenarios, setScenarios] = useState({});
   const [mlResult, setMlResult] = useState(null);
   const [mlLoading, setMlLoading] = useState(false);
@@ -131,9 +134,28 @@ export default function App() {
 
   const fetchScenarios = async () => {
     try {
-      const res = await fetch(`${API_BASE}/simulator/scenarios`);
-      if (res.ok) setScenarios(await res.json());
+      const res = await fetch(`${API_BASE}/simulator/status`);
+      if (res.ok) {
+        const data = await res.json();
+        setScenarios(data.scenarios || {});
+        setIsAutoGenerating(data.is_auto_generating);
+      }
     } catch (e) {}
+  };
+
+  const toggleAutoGeneration = async () => {
+    try {
+      const nextState = !isAutoGenerating;
+      const res = await fetch(`${API_BASE}/simulator/toggle?active=${nextState}`, {
+        method: "POST"
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setIsAutoGenerating(data.is_auto_generating);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const setScenario = async (scenario) => {
@@ -296,6 +318,30 @@ export default function App() {
 
         {/* Right Info & DSN Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {/* Auto Simulator Toggle Button */}
+          <button
+            onClick={toggleAutoGeneration}
+            className="btn-action btn-surface"
+            style={{
+              padding: '6px 12px',
+              fontSize: '12px',
+              borderColor: isAutoGenerating ? 'rgba(16, 185, 129, 0.3)' : 'rgba(245, 158, 11, 0.4)'
+            }}
+            title={isAutoGenerating ? "Click to Pause automatic background data generator" : "Click to Resume automatic background data generator"}
+          >
+            {isAutoGenerating ? (
+              <>
+                <Pause size={13} color="#10b981" />
+                <span style={{ color: '#34d399' }}>Auto-Stream: ON</span>
+              </>
+            ) : (
+              <>
+                <Play size={13} color="#f59e0b" />
+                <span style={{ color: '#fbbf24' }}>Auto-Stream: PAUSED</span>
+              </>
+            )}
+          </button>
+
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-secondary)' }}>
             <Clock size={13} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'text-top' }} />
             {missionClock}

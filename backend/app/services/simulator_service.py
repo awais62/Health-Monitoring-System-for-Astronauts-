@@ -45,6 +45,11 @@ class TelemetrySimulator:
             "AST-03": "NOMINAL",
             "AST-04": "NOMINAL"
         }
+        # Controls automatic periodic background generation
+        self.is_auto_generating: bool = True
+
+    def toggle_auto_generation(self, active: bool):
+        self.is_auto_generating = active
 
     def set_scenario(self, astronaut_id: str, scenario: str):
         if scenario in ["NOMINAL", "HYPOXIA", "EVA_EXERCISE", "ARRHYTHMIA", "HYPOTHERMIA"]:

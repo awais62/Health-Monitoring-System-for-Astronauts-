@@ -30,6 +30,9 @@ async def telemetry_background_loop():
     while background_sim_running:
         try:
             await asyncio.sleep(2.0)
+            if not simulator_service.is_auto_generating:
+                continue
+
             db = SessionLocal()
             try:
                 # Generate telemetry tick for all active astronauts

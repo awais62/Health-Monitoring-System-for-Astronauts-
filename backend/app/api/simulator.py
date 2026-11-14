@@ -39,6 +39,21 @@ def set_astronaut_scenario(req: ScenarioUpdateRequest):
         "message": f"Astronaut '{req.astronaut_id}' scenario transitioned to '{req.scenario}'."
     }
 
+@router.get("/status")
+def get_simulator_status():
+    return {
+        "is_auto_generating": simulator_service.is_auto_generating,
+        "scenarios": simulator_service.scenarios
+    }
+
+@router.post("/toggle")
+def toggle_simulator(active: bool):
+    simulator_service.toggle_auto_generation(active)
+    return {
+        "is_auto_generating": simulator_service.is_auto_generating,
+        "message": "Autonomous telemetry generation " + ("STARTED" if active else "PAUSED")
+    }
+
 @router.get("/scenarios")
 def get_current_scenarios():
     return simulator_service.scenarios
