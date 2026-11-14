@@ -107,3 +107,4 @@ class SyncQueue(Base):
     retry_count = Column(Integer, default=0)
     created_at = Column(DateTime, default=utcnow)
     synced_at = Column(DateTime, nullable=True)
+

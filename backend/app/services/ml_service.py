@@ -141,3 +141,4 @@ class AnomalyDetectorService:
         }
 
 ml_service = AnomalyDetectorService()
+

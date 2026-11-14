@@ -42,3 +42,4 @@ def set_astronaut_scenario(req: ScenarioUpdateRequest):
 @router.get("/scenarios")
 def get_current_scenarios():
     return simulator_service.scenarios
+

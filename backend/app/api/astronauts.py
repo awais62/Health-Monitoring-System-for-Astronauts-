@@ -74,3 +74,4 @@ def get_astronaut_status(astronaut_id: str, db: Session = Depends(get_db)):
         "active_alerts_count": len(active_alerts),
         "latest_metrics": latest_readings
     }
+

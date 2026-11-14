@@ -152,3 +152,4 @@ class TelemetrySimulator:
         return emitted
 
 simulator_service = TelemetrySimulator()
+

@@ -65,3 +65,4 @@ class SyncService:
         }
 
 sync_service = SyncService()
+

@@ -20,3 +20,4 @@ def toggle_connection(connected: bool):
 @router.post("/flush")
 def flush_sync_queue(db: Session = Depends(get_db)):
     return sync_service.flush_sync_queue(db)
+

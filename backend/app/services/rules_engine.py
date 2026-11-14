@@ -132,3 +132,4 @@ def evaluate_reading(db: Session, reading: VitalReading) -> Optional[Alert]:
     db.commit()
     db.refresh(alert)
     return alert
+

@@ -37,3 +37,4 @@ def get_ml_history(astronaut_id: str, db: Session = Depends(get_db)):
         }
         for r in results
     ]
+

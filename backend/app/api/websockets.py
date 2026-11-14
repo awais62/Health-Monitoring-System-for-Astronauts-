@@ -40,3 +40,4 @@ async def websocket_telemetry_endpoint(websocket: WebSocket):
         ws_manager.disconnect(websocket)
     except Exception:
         ws_manager.disconnect(websocket)
+

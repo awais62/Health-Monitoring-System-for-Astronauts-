@@ -98,3 +98,4 @@ def get_astronaut_health_summary(
         anomalies_detected=anomalies,
         overall_status=overall_status
     )
+

@@ -79,3 +79,4 @@ def update_threshold(metric: str, update_in: ThresholdConfigSchema, db: Session 
     db.commit()
     db.refresh(config)
     return config
+

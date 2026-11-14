@@ -134,3 +134,4 @@ python -m pytest backend/tests/test_api.py -v
 
 ## 5. Regulatory & Flight Prototype Notice
 > **DISCLAIMER:** BioAegis-Space is an aerospace educational research and software prototype. It is **not** a certified medical device and does not provide clinical diagnosis or autonomous medical treatment. All safety limits must be calibrated and reviewed by qualified aerospace flight surgeons before operational deployment.
+

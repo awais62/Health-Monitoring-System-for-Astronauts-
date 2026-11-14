@@ -115,3 +115,4 @@ class HealthSummaryResponse(BaseModel):
     acknowledged_alerts: int
     anomalies_detected: int
     overall_status: str  # NOMINAL, ADVISORY, CRITICAL
+

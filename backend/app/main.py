@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import asyncio
@@ -89,6 +90,43 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Root route: Provides clean status & immediate link to Swagger docs
+@app.get("/", response_class=HTMLResponse, tags=["System"])
+def root_status():
+    return """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>BioAegis-Space Gateway</title>
+        <style>
+            body { background: #090d16; color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+            .card { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 32px 40px; max-width: 500px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+            h1 { font-size: 20px; font-weight: 700; color: #38bdf8; margin: 0 0 8px 0; }
+            p { font-size: 14px; color: #94a3b8; line-height: 1.6; margin: 0 0 20px 0; }
+            .badge { display: inline-block; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 999px; margin-bottom: 16px; }
+            .links { display: flex; gap: 12px; }
+            a { background: #0284c7; color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; transition: background 0.15s; }
+            a:hover { background: #0369a1; }
+            a.secondary { background: #1e293b; color: #e2e8f0; }
+            a.secondary:hover { background: #334155; }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <span class="badge">&#9679; BACKEND ONLINE & STREAMING</span>
+            <h1>BioAegis-Space Telemetry API</h1>
+            <p>The FastAPI microservice is actively running. Telemetry ingestion, deterministic safety rules, ML anomaly detection, and WebSocket broadcasting are operational.</p>
+            <div class="links">
+                <a href="/docs">Interactive API Docs (Swagger)</a>
+                <a href="/healthz" class="secondary">Health Check (/healthz)</a>
+                <a href="http://localhost:5173" class="secondary" target="_blank">Mission Control UI</a>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
 
 # Mount API Routers
 app.include_router(astronauts_router, prefix=settings.API_V1_STR)
